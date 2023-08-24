@@ -81,3 +81,24 @@ where exists (select * from emp where mgr = e.empno);
 select *
 from emp
 where (sal, nvl(comm, -1)) in (select sal, nvl(comm, -1) from emp where ename = 'SCOTT');
+
+-- 10. 다음의 결과를 출력하는 쿼리를 작성하세요. 단, 서브쿼리를 사용합니다.
+
+     TOTAL       1980	1981       1982       1983
+---------- ---------- ---------- ---------- ----------
+        14	      1         10	       2	    1
+
+select count(*)
+from emp;
+
+select count(*) from emp where to_char(hiredate, 'YYYY') = '1980';
+select count(*) from emp where to_char(hiredate, 'YYYY') = '1981';
+select count(*) from emp where to_char(hiredate, 'YYYY') = '1982';
+select count(*) from emp where to_char(hiredate, 'YYYY') = '1983';
+
+select (select count(*) from emp) total,
+       (select count(*) from emp where to_char(hiredate, 'YYYY') = '1980') "1980",
+       (select count(*) from emp where to_char(hiredate, 'YYYY') = '1981') "1981",
+       (select count(*) from emp where to_char(hiredate, 'YYYY') = '1982') "1982",
+       (select count(*) from emp where to_char(hiredate, 'YYYY') = '1983') "1983"
+from dual;
